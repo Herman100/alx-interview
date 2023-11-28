@@ -6,6 +6,9 @@ from math import factorial
 
 
 def pascal_triangle(n):
+    """
+    function for pascal's triangle
+    """
     if n <= 0:
         return []
     triangle = []
