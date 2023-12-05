@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ method that determines if all the boxes can be opened"""
+
+
 def canUnlockAll(boxes):
     """""funcion to return boolean whether box is opened or not"""
     unlocked = [0]
