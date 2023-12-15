@@ -13,7 +13,7 @@ def minOperations(n):
     minimum_operation = 2
     while n > 1:
         while n % minimum_operation == 0:
-            operations += minimum_operation
+            number_of_operations += minimum_operation
             n /= minimum_operation
         minimum_operation += 1
     return number_of_operations
