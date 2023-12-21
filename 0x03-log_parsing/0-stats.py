@@ -1,61 +1,40 @@
 #!/usr/bin/python3
 """
 This module contains a script that reads from stdin line by line and computes
-metrics as specified in the project requirements.
+metrics.
 """
 
+
 import sys
-import signal
 
-status_codes = {"200": 0, "301": 0, "400": 0, "401": 0,
-                "403": 0, "404": 0, "405": 0, "500": 0}
-total_size = 0
-line_count = 0
-
-
-def print_stats():
-    """
-    This function prints the statistics computed from the logs.
-    It prints the total file size and the count of each status code.
-    """
-    print("File size: {}".format(total_size))
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print("{}: {}".format(code, status_codes[code]))
-
-
-def signal_handler(sig, frame):
-    """
-    This function handles the signal interruption (CTRL + C).
-    It prints the statistics and exits the program when the signal occurs.
-    """
-    print_stats()
-    sys.exit(0)
-
-
-signal.signal(signal.SIGINT, signal_handler)
+possible_status_code = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+total_file_size = 0
+count = 0
 
 try:
     for line in sys.stdin:
-        try:
-            parts = line.split()
-            size = int(parts[-1])
-            code = parts[-2]
+        split_line = line.split(" ")
+        if len(split_line) > 4:
+            code = split_line[-2]
+            new_size = int(split_line[-1])
+            if code in possible_status_code.keys():
+                possible_status_code[code] += 1
+            total_file_size += new_size
+            count += 1
 
-            if code in status_codes:
-                status_codes[code] += 1
+        if count == 10:
+            count = 0
+            print('File size: {}'.format(total_file_size))
+            for key, value in sorted(possible_status_code.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
 
-            total_size += size
-            line_count += 1
-
-            if line_count % 10 == 0:
-                print_stats()
-
-        except (e):
-            continue
-
-except KeyboardInterrupt:
+except Exception as e:
     pass
 
 finally:
-    print_stats()
+    print('File size: {}'.format(total_file_size))
+    for key, value in sorted(possible_status_code.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
