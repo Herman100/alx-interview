@@ -55,7 +55,8 @@ try:
             continue
 
 except KeyboardInterrupt:
-    pass
+  print_stats()
+  raise
 
 finally:
     print_stats()
