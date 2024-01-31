@@ -1,24 +1,13 @@
 # !/usr/bin/python3
 """
-This module contains a function that determines
-the fewest number of coins needed
-to meet a given amount total.
+function that determines the fewest number of coins to an amount
 """
 
 
 def makeChange(coins, total):
     """
     Determine the fewest number of coins needed to meet a given amount total.
-
-    Parameters:
-    coins (List[int]): A list of the values of the coins in your possession.
-    total (int): The total amount to meet.
-
-    Returns:
-    int: The fewest number of coins needed to meet total.
-    If total is 0 or less,
-    return 0. If total cannot be met by any number
-    of coins you have, return -1.
+    return the fewest number of coins needed to meet total.
     """
     if total <= 0:
         return 0
